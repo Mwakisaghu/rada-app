@@ -9,15 +9,16 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src || true"
   },
   "dependencies": {
+    "antd": "^5.5.0",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "antd": "^5.5.0",
-    "axios": "^1.4.0"
+    "react-responsive": "^10.0.1"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.0.0",
-    "eslint-plugin-react": "^7.0.0"
+    "eslint-plugin-react": "^7.0.0",
+    "vite": "^5.0.0"
   }
 }
