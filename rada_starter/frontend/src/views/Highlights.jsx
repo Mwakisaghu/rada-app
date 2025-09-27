@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Avatar, Tooltip, Empty, Modal, Button } from 'antd'
 import { useMediaQuery } from 'react-responsive'
+import { useSwipeable } from 'react-swipeable'
 
 export default function Highlights() {
   const [highlights, setHighlights] = useState([])
@@ -35,6 +36,12 @@ export default function Highlights() {
   const goNext = () => setCurrentIndex(i => (i < highlights.length - 1 ? i + 1 : i))
 
   const selectedHighlight = currentIndex !== null ? highlights[currentIndex] : null
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => goNext(),
+    onSwipedRight: () => goPrev(),
+    trackMouse: true, // allows drag with mouse on desktop
+  })
 
   const highlightBar = (
     <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', padding: '8px 0' }}>
@@ -90,7 +97,7 @@ export default function Highlights() {
         title={selectedHighlight?.title}
       >
         {selectedHighlight && (
-          <div style={{ textAlign: 'center' }}>
+          <div {...swipeHandlers} style={{ textAlign: 'center' }}>
             <img
               src={selectedHighlight.cover}
               alt={selectedHighlight.title}
@@ -100,7 +107,7 @@ export default function Highlights() {
             <p><strong>Expires in:</strong> {Math.ceil(selectedHighlight.expiresIn / 60)} min</p>
             <p>✨ More event details can go here...</p>
 
-            {/* Swipe controls */}
+            {/* Buttons still available for desktop fallback(Swipe Cotrols) */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 16 }}>
               <Button onClick={goPrev} disabled={currentIndex === 0}>Prev</Button>
               <Button onClick={goNext} disabled={currentIndex === highlights.length - 1}>Next</Button>
