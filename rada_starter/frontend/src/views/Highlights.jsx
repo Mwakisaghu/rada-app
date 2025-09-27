@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Avatar, Tooltip, Empty, Modal, Button } from 'antd'
+import React, { useEffect, useState, useRef } from 'react'
+import { Card, Avatar, Tooltip, Empty, Modal, Button, Progress } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import { useSwipeable } from 'react-swipeable'
 
 export default function Highlights() {
   const [highlights, setHighlights] = useState([])
-  const [currentIndex, setCurrentIndex] = useState(null) // track index instead of item
-  const isMobile = useMediaQuery({ maxWidth: 768 }) // detect mobile
+  const [currentIndex, setCurrentIndex] = useState(null)
+  const [progress, setProgress] = useState(0) // progress % for autoplay
+  const autoplayDuration = 5000 // 5 seconds per highlight
+  const intervalRef = useRef(null)
+  const isMobile = useMediaQuery({ maxWidth: 768 })
 
   useEffect(() => {
     // Placeholder: fetch top-rated events from API
@@ -25,23 +28,60 @@ export default function Highlights() {
           .filter(item => item.expiresIn > 0)
       )
     }, 1000)
-
     return () => clearInterval(timer)
   }, [])
 
-  const openHighlight = (index) => setCurrentIndex(index)
-  const closeHighlight = () => setCurrentIndex(null)
+  const openHighlight = (index) => {
+    setCurrentIndex(index)
+    setProgress(0) // reset progress
+  }
 
-  const goPrev = () => setCurrentIndex(i => (i > 0 ? i - 1 : i))
-  const goNext = () => setCurrentIndex(i => (i < highlights.length - 1 ? i + 1 : i))
+  const closeHighlight = () => {
+    setCurrentIndex(null)
+    setProgress(0)
+    clearInterval(intervalRef.current)
+  }
+
+  const goPrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(i => i - 1)
+      setProgress(0)
+    }
+  }
+
+  const goNext = () => {
+    if (currentIndex < highlights.length - 1) {
+      setCurrentIndex(i => i + 1)
+      setProgress(0)
+    } else {
+      closeHighlight()
+    }
+  }
 
   const selectedHighlight = currentIndex !== null ? highlights[currentIndex] : null
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => goNext(),
     onSwipedRight: () => goPrev(),
-    trackMouse: true, // allows drag with mouse on desktop
+    trackMouse: true,
   })
+
+  // Auto-play effect
+  useEffect(() => {
+    if (selectedHighlight) {
+      clearInterval(intervalRef.current)
+      let startTime = Date.now()
+      intervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - startTime
+        const percent = Math.min((elapsed / autoplayDuration) * 100, 100)
+        setProgress(percent)
+        if (percent >= 100) {
+          goNext()
+        }
+      }, 100)
+    }
+    return () => clearInterval(intervalRef.current)
+  }, [selectedHighlight, currentIndex])
 
   const highlightBar = (
     <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', padding: '8px 0' }}>
@@ -52,7 +92,7 @@ export default function Highlights() {
         >
           <div
             style={{ textAlign: 'center', minWidth: 80, cursor: 'pointer' }}
-            onClick={() => openHighlight(index)} // click opens modal
+            onClick={() => openHighlight(index)}
           >
             <Avatar
               size={64}
@@ -69,7 +109,6 @@ export default function Highlights() {
   return (
     <>
       {isMobile ? (
-        // WhatsApp-style floating bar
         <div
           style={{
             position: 'sticky',
@@ -83,7 +122,6 @@ export default function Highlights() {
           {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
         </div>
       ) : (
-        // Desktop fallback: inside a Card
         <Card title="🔥 Highlights (Trending Soon)" style={{ marginBottom: 16 }}>
           {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
         </Card>
@@ -98,6 +136,14 @@ export default function Highlights() {
       >
         {selectedHighlight && (
           <div {...swipeHandlers} style={{ textAlign: 'center' }}>
+            {/* Progress bar at top */}
+            <Progress
+              percent={progress}
+              showInfo={false}
+              strokeColor="#f5222d"
+              style={{ marginBottom: 16 }}
+            />
+
             <img
               src={selectedHighlight.cover}
               alt={selectedHighlight.title}
@@ -107,7 +153,6 @@ export default function Highlights() {
             <p><strong>Expires in:</strong> {Math.ceil(selectedHighlight.expiresIn / 60)} min</p>
             <p>✨ More event details can go here...</p>
 
-            {/* Buttons still available for desktop fallback(Swipe Cotrols) */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 16 }}>
               <Button onClick={goPrev} disabled={currentIndex === 0}>Prev</Button>
               <Button onClick={goNext} disabled={currentIndex === highlights.length - 1}>Next</Button>

@@ -7,8 +7,16 @@ export default function MapView() {
   useEffect(() => {
     // placeholder: fetch events from API
     setEvents([
-      { id: 1, title: 'Street Food Pop-up', distance: '0.4 km', timeLeft: '2 hr' },
-      { id: 2, title: 'Open Mic Night', distance: '0.9 km', timeLeft: '5 hr' }
+    { id: 1, title: 'Street Food Pop-up', distance: '0.4 km', timeLeft: '2 hr' },
+    { id: 2, title: 'Open Mic Night', distance: '0.9 km', timeLeft: '5 hr' },
+    { id: 3, title: 'Tech Meetup', distance: '1.2 km', timeLeft: '1 hr' },
+    { id: 4, title: 'Live Jazz Concert', distance: '2.0 km', timeLeft: '3 hr' },
+    { id: 5, title: 'Pop-up Art Gallery', distance: '1.8 km', timeLeft: '6 hr' },
+    { id: 6, title: 'Fitness Bootcamp', distance: '0.5 km', timeLeft: '4 hr' },
+    { id: 7, title: 'Poetry Slam', distance: '2.5 km', timeLeft: '7 hr' },
+    { id: 8, title: 'Outdoor Movie Night', distance: '3.0 km', timeLeft: '8 hr' },
+    { id: 9, title: 'Farmers Market', distance: '1.0 km', timeLeft: '1.5 hr' },
+    { id: 10, title: 'Photography Walk', distance: '0.7 km', timeLeft: '2.5 hr' },
     ])
   }, [])
 
