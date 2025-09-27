@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Avatar, Tooltip, Empty, Modal } from 'antd'
+import { Card, Avatar, Tooltip, Empty, Modal, Button } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 
 export default function Highlights() {
   const [highlights, setHighlights] = useState([])
-  const [selectedHighlight, setSelectedHighlight] = useState(null) // store clicked highlight
+  const [currentIndex, setCurrentIndex] = useState(null) // track index instead of item
   const isMobile = useMediaQuery({ maxWidth: 768 }) // detect mobile
 
   useEffect(() => {
@@ -28,16 +28,24 @@ export default function Highlights() {
     return () => clearInterval(timer)
   }, [])
 
+  const openHighlight = (index) => setCurrentIndex(index)
+  const closeHighlight = () => setCurrentIndex(null)
+
+  const goPrev = () => setCurrentIndex(i => (i > 0 ? i - 1 : i))
+  const goNext = () => setCurrentIndex(i => (i < highlights.length - 1 ? i + 1 : i))
+
+  const selectedHighlight = currentIndex !== null ? highlights[currentIndex] : null
+
   const highlightBar = (
     <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', padding: '8px 0' }}>
-      {highlights.map(item => (
+      {highlights.map((item, index) => (
         <Tooltip
           key={item.id}
           title={`${item.title} • expires in ${Math.ceil(item.expiresIn / 60)} min`}
         >
           <div
             style={{ textAlign: 'center', minWidth: 80, cursor: 'pointer' }}
-            onClick={() => setSelectedHighlight(item)} // click opens modal
+            onClick={() => openHighlight(index)} // click opens modal
           >
             <Avatar
               size={64}
@@ -78,7 +86,7 @@ export default function Highlights() {
       <Modal
         open={!!selectedHighlight}
         footer={null}
-        onCancel={() => setSelectedHighlight(null)}
+        onCancel={closeHighlight}
         title={selectedHighlight?.title}
       >
         {selectedHighlight && (
@@ -91,6 +99,12 @@ export default function Highlights() {
             <p><strong>Region:</strong> {selectedHighlight.region}</p>
             <p><strong>Expires in:</strong> {Math.ceil(selectedHighlight.expiresIn / 60)} min</p>
             <p>✨ More event details can go here...</p>
+
+            {/* Swipe controls */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 16 }}>
+              <Button onClick={goPrev} disabled={currentIndex === 0}>Prev</Button>
+              <Button onClick={goNext} disabled={currentIndex === highlights.length - 1}>Next</Button>
+            </div>
           </div>
         )}
       </Modal>
