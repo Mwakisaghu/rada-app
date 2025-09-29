@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Card, Avatar, Tooltip, Empty, Modal, Button, Progress } from 'antd'
+import { Avatar, Tooltip, Empty, Modal, Button, Progress } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import { useSwipeable } from 'react-swipeable'
 
@@ -122,9 +122,9 @@ export default function Highlights() {
           {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
         </div>
       ) : (
-        <Card title="🔥 Highlights (Trending Soon)" style={{ marginBottom: 16 }}>
+        <div style={{ padding: '16px 0', borderBottom: '1px solid #f0f0f0' }}>
           {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
-        </Card>
+        </div>
       )}
 
       {/* Modal for highlight details */}

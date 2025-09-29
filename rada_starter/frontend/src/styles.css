@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
 
-body { margin: 0; font-family: Inter, Arial, sans-serif; }
-#root { height: 100vh; }
+#root {
+  height: 100vh;
+}

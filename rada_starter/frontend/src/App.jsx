@@ -1,19 +1,24 @@
-import React from 'react'
-import { Layout } from 'antd'
-import MapView from './views/MapView'
-import Highlights from './views/Highlights'
-import './styles.css'
+import React from "react";
+import { Layout } from "antd";
+import HeaderBar from "./components/HeaderBar";
+import MapView from "./views/MapView";
+import Highlights from "./views/Highlights";
+import "./styles.css";   // ✅ relative import
 
-const { Header, Content } = Layout
+const { Content } = Layout;
 
 export default function App() {
+  const handleMenuClick = () => {
+    // toggle side drawer or menu (for mobile)
+  };
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ color: 'white', fontSize: 20 }}>Rada...?</Header>
-      <Content style={{ padding: '16px' }}>
+    <Layout style={{ minHeight: "100vh" }}>
+      <HeaderBar onMenuClick={handleMenuClick} />
+      <Content style={{ padding: "16px", marginTop: 64 }}>
         <Highlights />
         <MapView />
       </Content>
     </Layout>
-  )
+  );
 }
