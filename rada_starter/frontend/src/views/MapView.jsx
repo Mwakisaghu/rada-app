@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, List, Button } from "antd";
+import { Row, Col, Card, List, Button, Tag } from "antd";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -13,19 +13,14 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
 });
 
-// Helper to fly map when an event is selected
+// Helper: fly map when an event is selected
 function FlyToLocation({ event }) {
   const map = useMap();
-
   useEffect(() => {
     if (event && event.lat && event.lng) {
-      map.flyTo([event.lat, event.lng], 16, {
-        animate: true,
-        duration: 1.5,
-      });
+      map.flyTo([event.lat, event.lng], 16, { animate: true, duration: 1.5 });
     }
   }, [event, map]);
-
   return null;
 }
 
@@ -34,7 +29,6 @@ export default function MapView() {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
-    // placeholder: fetch events from API
     setEvents([
       {
         id: 1,
@@ -83,23 +77,55 @@ export default function MapView() {
     <Row gutter={16}>
       {/* Events List */}
       <Col xs={24} md={8}>
-        <Card title="Events nearby">
+        <Card
+          title="Events nearby"
+          bodyStyle={{
+            padding: 0,
+            maxHeight: "70vh", // same as map height
+            overflowY: "auto", // scrollable
+          }}
+          headStyle={{
+            position: "sticky", // sticky header
+            top: 0,
+            zIndex: 1,
+            background: "#fff",
+          }}
+        >
           <List
             dataSource={events}
-            renderItem={(item) => (
-              <List.Item
-                actions={[
-                  <Button key="view" onClick={() => setSelectedEvent(item)}>
-                    View
-                  </Button>,
-                ]}
-              >
-                <List.Item.Meta
-                  title={item.title}
-                  description={`${item.distance} • ${item.timeLeft}`}
-                />
-              </List.Item>
-            )}
+            renderItem={(item) => {
+              const isSelected = selectedEvent?.id === item.id;
+              return (
+                <List.Item
+                  style={{
+                    background: isSelected ? "#e6f7ff" : "#fff",
+                    borderLeft: isSelected
+                      ? "4px solid #1890ff"
+                      : "4px solid transparent",
+                    cursor: "pointer",
+                    transition: "all 0.3s",
+                  }}
+                  onClick={() => setSelectedEvent(item)}
+                  actions={[
+                    <Tag color="blue" key="time">
+                      {item.timeLeft}
+                    </Tag>,
+                    <Button
+                      key="view"
+                      size="small"
+                      onClick={() => setSelectedEvent(item)}
+                    >
+                      View
+                    </Button>,
+                  ]}
+                >
+                  <List.Item.Meta
+                    title={<b>{item.title}</b>}
+                    description={item.distance}
+                  />
+                </List.Item>
+              );
+            }}
           />
         </Card>
       </Col>
@@ -117,17 +143,12 @@ export default function MapView() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; OpenStreetMap contributors"
               />
-
-              {/* Fly map when event selected */}
               <FlyToLocation event={selectedEvent} />
-
               {events.map((event) => (
                 <Marker
                   key={event.id}
                   position={[event.lat, event.lng]}
-                  eventHandlers={{
-                    click: () => setSelectedEvent(event),
-                  }}
+                  eventHandlers={{ click: () => setSelectedEvent(event) }}
                 >
                   <Popup>
                     <b>{event.title}</b>
