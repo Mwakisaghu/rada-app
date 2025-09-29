@@ -1,0 +1,95 @@
+.header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+/* Left section */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* consistent spacing between items */
+}
+
+.header-title {
+  margin: 0;
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Location filter */
+.location-filter {
+  min-width: 120px;
+}
+
+.location-filter .ant-select-selector {
+  border-radius: 16px !important; /* pill/tag style */
+  padding: 0 12px !important;
+  height: 28px !important;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Mobile menu button */
+.header-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* Right section (buttons + avatar) */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.post-btn {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.header-avatar {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.header-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .header-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+/* hide Post Event on mobile */
+  .post-btn {
+    display: none; 
+  }
+
+/* slightly smaller on mobile */
+  .location-filter {
+    min-width: 100px;
+  }
+}
