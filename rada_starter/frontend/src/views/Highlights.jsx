@@ -15,8 +15,34 @@ export default function Highlights() {
   useEffect(() => {
     // Placeholder: fetch top-rated events from API
     setHighlights([
-      { id: 1, title: 'Street Food Pop-up', expiresIn: 30, region: 'Nairobi', cover: '/images/food.jpg' },
-      { id: 2, title: 'Open Mic Night', expiresIn: 90, region: 'Nairobi', cover: '/images/music.jpg' }
+      {
+        id: 1,
+        title: 'Street Food Pop-up',
+        expiresIn: 30,
+        region: 'Nairobi',
+        cover: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&h=400'
+      },
+      {
+        id: 2,
+        title: 'Open Mic Night',
+        expiresIn: 90,
+        region: 'Nairobi',
+        cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=400&h=400'
+      },
+      {
+        id: 3,
+        title: 'Art Exhibition',
+        expiresIn: 120,
+        region: 'Nairobi',
+        cover: 'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&w=400&h=400'
+      },
+      {
+        id: 4,
+        title: 'Tech Meetup',
+        expiresIn: 60,
+        region: 'Nairobi',
+        cover: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=400&h=400'
+      }
     ])
   }, [])
 

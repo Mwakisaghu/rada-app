@@ -1,3 +1,4 @@
+/* ===== HEADER WRAPPER ===== */
 .header-bar {
   position: fixed;
   top: 0;
@@ -8,43 +9,121 @@
   justify-content: space-between;
   padding: 0 24px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.75);
+  min-height: 64px;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(45, 45, 45, 0.95));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
 }
 
-/* Left section */
+/* ===== LEFT SECTION ===== */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px; /* consistent spacing between items */
+  gap: 16px;
+  height: 100%;
 }
 
+/* ===== LOGO / TITLE ===== */
 .header-title {
   margin: 0;
-  color: #000;
+  padding: 0;
+  color: #fff;
   font-size: 18px;
   font-weight: 600;
+  line-height: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-/* Location filter */
+/* Animated shimmer for “Rada” */
+.animated-title {
+  background: linear-gradient(90deg, #ffffff, #4dabf7, #ff7e5f, #feb47b, #ffffff);
+  background-size: 400% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes shine {
+  to {
+    background-position: 400% center;
+  }
+}
+
+/* ===== LOCATION FILTER ===== */
+.title-wrapper {
+  min-width: 80px;
+  margin-left: 8px;
+  padding: 0 12px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  line-height: 32px;
+}
+
+.title-wrapper:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
 .location-filter {
   min-width: 120px;
+  margin-left: 8px;
+  height: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .location-filter .ant-select-selector {
-  border-radius: 16px !important; /* pill/tag style */
+  border-radius: 16px !important;
   padding: 0 12px !important;
-  height: 28px !important;
+  height: 32px !important;
   display: flex;
   align-items: center;
   font-size: 14px;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  transition: all 0.3s ease !important;
 }
 
-/* Mobile menu button */
+.location-filter .ant-select-selector:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Animated 🔥 badge */
+.trending-badge {
+  font-size: 14px;
+  margin-left: 4px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* ===== MENU BUTTON ===== */
 .header-menu-btn {
   display: none;
   background: none;
@@ -52,95 +131,65 @@
   font-size: 24px;
   cursor: pointer;
   padding: 8px;
+  color: #fff;
 }
 
-/* Right section (buttons + avatar) */
+/* ===== RIGHT SECTION ===== */
 .header-right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
+/* ===== POST EVENT BUTTON ===== */
 .post-btn {
+  position: relative;
   border-radius: 6px;
-  font-weight: 500;
-}
-
-.header-avatar {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.header-avatar:hover {
-  transform: scale(1.05);
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .header-menu-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-/* hide Post Event on mobile */
-  .post-btn {
-    display: none; 
-  }
-
-/* slightly smaller on mobile */
-  .location-filter {
-    min-width: 100px;
-  }
-
-/* Gradient shimmer animation for "Rada" */
-.animated-title {
-  background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff7e5f);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 3s infinite linear;
-  background-size: 200% 100%;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Greeting text */
-.greeting-text {
-  margin-left: 8px;
-  font-size: 14px;
-  color: #fff;
-  font-weight: 500;
-}
-
-/* Trending location badge */
-.trending-badge {
-  font-size: 14px;
-  margin-left: 4px;
-}
-
-/* Ensure header layout adapts */
-.header-bar {
+  height: 36px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: linear-gradient(45deg, #1890ff, #69c0ff) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+  color: #fff !important;
 }
 
-/* Compact location filter on mobile */
-.location-filter {
-  margin-left: 12px;
-  min-width: 100px;
+.post-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
 }
 
-/* Greeting text only visible on desktop */
+/* ===== AVATAR ===== */
+.ant-avatar {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #1890ff, #69c0ff);
+}
+
+.ant-avatar:hover {
+  transform: scale(1.1);
+  border-color: #1890ff;
+  box-shadow: 0 0 15px rgba(24, 144, 255, 0.3);
+}
+
+/* ===== NOTIFICATION ICON ===== */
+.notification-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.notification-icon:hover {
+  transform: scale(1.15) rotate(10deg);
+}
+
+/* ===== GREETING TEXT ===== */
 .greeting-text {
   margin-left: 8px;
   font-size: 14px;
@@ -149,9 +198,212 @@
   white-space: nowrap;
 }
 
+/* ===== MOBILE STYLES ===== */
 @media (max-width: 768px) {
-  .post-btn {
-    display: none;
+  .header-bar {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    height: 56px;
   }
+
+  .title-wrapper {
+    height: 28px;
+    min-width: 70px;
+    padding: 0 10px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-right: 4px;
+  }
+
+  .header-title {
+    display: inline-flex;
+    align-items: center;
+    font-size: 17px;
+    white-space: nowrap;
+  }
+
+  .animated-title {
+    background-size: 200% auto;
+    animation: shine 5s linear infinite;
+  }
+
+  .location-filter {
+    min-width: 90px;
+    max-width: 120px;
+  }
+
+  /* Hide location select in header on small screens; keep it in the drawer */
+  .location-filter {
+    display: none !important;
+  }
+
+  .location-filter .ant-select-selector {
+    padding: 0 8px !important;
+    height: 30px !important;
+    font-size: 13px;
+  }
+
+  .post-btn {
+    display: none; /* hide Post Event on mobile */
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .notification-icon .anticon {
+    font-size: 18px !important;
+  }
+
+  .ant-badge {
+    margin-right: 2px;
+  }
+
+  /* shrink badge count slightly on mobile */
+  .ant-badge .ant-badge-count {
+    transform: scale(0.8);
+    transform-origin: center;
+    font-size: 10px !important;
+    padding: 0 4px !important;
+  }
+
+  .ant-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    font-size: 14px !important;
+  }
+
+  /* mobile-actions specific avatar & icon sizing */
+  .mobile-actions .ant-avatar {
+    width: 26px !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    font-size: 13px !important;
+  }
+
+  .mobile-actions .anticon {
+    font-size: 18px !important;
+  }
+
+  /* compact mobile actions (bell + avatar) */
+  .mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+  /* ===== MOBILE DRAWER ===== */
+.mobile-drawer .ant-drawer-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #fff;
 }
+
+.mobile-drawer .ant-drawer-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.drawer-section {
+  margin-bottom: 16px;
+}
+
+.drawer-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 6px;
+}
+
+.drawer-post-btn {
+  border-radius: 6px;
+  font-weight: 600;
+  background: linear-gradient(45deg, #1890ff, #69c0ff) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+  .notification-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  /* Compact location styling inside the mobile drawer */
+  .mobile-drawer .location-filter {
+    width: 100%;
+  }
+
+  .mobile-drawer .location-filter .ant-select-selector {
+    height: 36px !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  .mobile-drawer .location-filter .ant-select-selection-item {
+    padding-right: 12px !important;
+  }
+
+  .mobile-drawer .trending-badge {
+    font-size: 12px;
+    margin-left: 6px;
+  }
+
+  /* style for compact clickable location label in the drawer */
+  .mobile-drawer .location-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+  }
+
+  .mobile-drawer .location-label:focus {
+    outline: 2px solid rgba(24,144,255,0.15);
+    outline-offset: 2px;
+  }
+
+  .mobile-drawer .location-text {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .trending-badge svg {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+  }
+
+  /* Make drawer label a bit smaller for compactness */
+  .mobile-drawer .drawer-label {
+    font-size: 13px;
+  }
+
 }

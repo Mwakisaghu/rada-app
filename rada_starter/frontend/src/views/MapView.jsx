@@ -49,12 +49,8 @@ export default function MapView() {
       {
         id: 1,
         title: "Street Food Pop-up",
-        // sample cover — place your file at frontend/public/music-festivals.webp
-        // and it will be available at '/music-festivals.webp'
-        cover: "/music-festivals.webp",
-        // ISO datetime for event start
+        cover: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=800&h=500",
         datetime: "2025-11-05T18:30:00",
-        // human fallback distance/time (used if user location is unknown)
         distance: "0.4 km",
         timeLeft: "2 hr",
         description: "A curated street food experience with local vendors, live DJs and family-friendly vibes.",
@@ -64,6 +60,7 @@ export default function MapView() {
       {
         id: 2,
         title: "Open Mic Night",
+        cover: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&h=500",
         datetime: "2025-11-06T20:00:00",
         distance: "0.9 km",
         timeLeft: "5 hr",
@@ -74,6 +71,7 @@ export default function MapView() {
       {
         id: 3,
         title: "Tech Meetup",
+        cover: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&h=500",
         datetime: "2025-11-07T18:00:00",
         distance: "1.2 km",
         timeLeft: "1 hr",
@@ -84,6 +82,7 @@ export default function MapView() {
       {
         id: 4,
         title: "Live Jazz Concert",
+        cover: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=800&h=500",
         datetime: "2025-11-08T19:30:00",
         distance: "2.0 km",
         timeLeft: "3 hr",
@@ -94,6 +93,7 @@ export default function MapView() {
       {
         id: 5,
         title: "Pop-up Art Gallery",
+        cover: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=800&h=500",
         datetime: "2025-11-09T10:00:00",
         distance: "1.8 km",
         timeLeft: "6 hr",
