@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Avatar, Tooltip, Empty, Modal, Button, Progress } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import { useSwipeable } from 'react-swipeable'
+import crowdEventsImage from '../assets/crowd-events.jpg'
 
 export default function Highlights() {
   const [highlights, setHighlights] = useState([])
@@ -119,11 +120,112 @@ export default function Highlights() {
             padding: '8px 0'
           }}
         >
-          {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
+          {highlights.length > 0 ? highlightBar : (
+            <div
+              style={{
+                position: 'relative',
+                height: '200px',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                margin: '12px'
+              }}
+            >
+              {/* Background image */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundImage: `url(${crowdEventsImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  filter: 'brightness(0.7)'
+                }}
+              />
+              {/* Glassmorphic overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  backdropFilter: 'blur(8px)',
+                  padding: '1.5rem',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  width: '90%',
+                  maxWidth: '400px',
+                  textAlign: 'center',
+                  color: 'white',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                }}
+              >
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '0.75rem' }}>
+                  Discover Exciting Events
+                </h2>
+                <p style={{ fontSize: '1rem', lineHeight: '1.4' }}>
+                  Connect and Create Unforgettable Moments
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div style={{ padding: '16px 0', borderBottom: '1px solid #f0f0f0' }}>
-          {highlights.length > 0 ? highlightBar : <Empty description="No highlights yet" />}
+          {/* Desktop/laptop: always show glassmorphic promotional banner */}
+          <div
+            style={{
+              position: 'relative',
+              height: '300px',
+              borderRadius: '15px',
+              overflow: 'hidden',
+              margin: '20px'
+            }}
+          >
+            {/* Background image */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundImage: `url(${crowdEventsImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'brightness(0.7)'
+              }}
+            />
+            {/* Glassmorphic overlay */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                backdropFilter: 'blur(8px)',
+                padding: '2rem',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                width: '80%',
+                maxWidth: '600px',
+                textAlign: 'center',
+                color: 'white',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              }}
+            >
+              <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+                Discover Exciting Events
+              </h2>
+              <p style={{ fontSize: '1.2rem', lineHeight: '1.5' }}>
+                Connect and Create Unforgettable Moments
+              </p>
+            </div>
+          </div>
         </div>
       )}
 

@@ -1,5 +1,5 @@
 // src/components/HeaderBar.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Button,
@@ -9,16 +9,30 @@ import {
   Avatar,
   Dropdown,
   Select,
+  Badge,
+  Grid,
 } from "antd";
-import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { MenuOutlined, UserOutlined, BellOutlined } from "@ant-design/icons";
 import "./HeaderBar.css";
 
 const { Title } = Typography;
 const { Option } = Select;
+const { useBreakpoint } = Grid;
 
 export default function HeaderBar() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("Nairobi");
+  const [greeting, setGreeting] = useState("");
+  const [notifications, setNotifications] = useState(3); // demo: unread count
+  const screens = useBreakpoint();
+
+  useEffect(() => {
+    // Dynamic greeting
+    const hour = new Date().getHours();
+    if (hour < 12) setGreeting("Good Morning");
+    else if (hour < 18) setGreeting("Good Afternoon");
+    else setGreeting("Good Evening");
+  }, []);
 
   const showDrawer = () => setDrawerVisible(true);
   const closeDrawer = () => setDrawerVisible(false);
@@ -43,7 +57,7 @@ export default function HeaderBar() {
             className="header-menu-btn"
             onClick={showDrawer}
           />
-          <Title level={4} className="header-title">
+          <Title level={4} className="header-title animated-title">
             Rada
           </Title>
 
@@ -54,26 +68,49 @@ export default function HeaderBar() {
             className="location-filter"
             size="small"
           >
-            <Option value="Nairobi">Nairobi</Option>
+            <Option value="Nairobi">
+              Nairobi <span className="trending-badge">🔥</span>
+            </Option>
             <Option value="Mombasa">Mombasa</Option>
             <Option value="Kisumu">Kisumu</Option>
             <Option value="Eldoret">Eldoret</Option>
           </Select>
         </div>
 
-        {/* Right side: Desktop actions */}
+        {/* Right side: Desktop vs Mobile actions */}
         <div className="header-right">
-          <Button type="primary" className="post-btn">
-            Post Event
-          </Button>
+          {/* Notification bell */}
+          <Badge count={notifications} offset={[0, 5]}>
+            <BellOutlined
+              style={{
+                fontSize: "20px",
+                marginRight: screens.md ? "16px" : "8px",
+                cursor: "pointer",
+                color: "#fff",
+              }}
+            />
+          </Badge>
+
+          {/* Show Post Event only on desktop */}
+          {screens.md && (
+            <Button type="primary" className="post-btn">
+              Post Event
+            </Button>
+          )}
 
           {/* Profile dropdown */}
           <Dropdown overlay={profileMenu} placement="bottomRight" arrow>
-            <Avatar
-              size="large"
-              icon={<UserOutlined />}
-              style={{ marginLeft: "16px", cursor: "pointer" }}
-            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
+              <Avatar size="large" icon={<UserOutlined />} />
+              {/* Hide greeting on mobile */}
+              {screens.md && <span className="greeting-text">{greeting}</span>}
+            </div>
           </Dropdown>
         </div>
       </Layout.Header>
@@ -91,6 +128,14 @@ export default function HeaderBar() {
           <Menu.Item key="highlights">Highlights</Menu.Item>
           <Menu.Item key="map">Map</Menu.Item>
           <Menu.Item key="profile">Profile</Menu.Item>
+          {/* Post Event button inside drawer for mobile */}
+          {!screens.md && (
+            <Menu.Item key="post">
+              <Button type="primary" block>
+                Post Event
+              </Button>
+            </Menu.Item>
+          )}
         </Menu>
       </Drawer>
     </>

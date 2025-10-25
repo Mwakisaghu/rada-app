@@ -92,4 +92,66 @@
   .location-filter {
     min-width: 100px;
   }
+
+/* Gradient shimmer animation for "Rada" */
+.animated-title {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff7e5f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s infinite linear;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Greeting text */
+.greeting-text {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Trending location badge */
+.trending-badge {
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+/* Ensure header layout adapts */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+
+/* Compact location filter on mobile */
+.location-filter {
+  margin-left: 12px;
+  min-width: 100px;
+}
+
+/* Greeting text only visible on desktop */
+.greeting-text {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .post-btn {
+    display: none;
+  }
+}
 }
